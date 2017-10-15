@@ -5,22 +5,22 @@
 	<title></title>
 </head>
 <body>
+<div class = "container">
+ <h1>Dog Gifs</h1>
 
-<div class="buttons">
-	<button id="showButtons"></button>
-</div>
+    <!-- Buttons will be added here -->
+    <div id="showButtons"></div>
 
-<div class="gifs"></div>
+    <form id="dog-form">
+      <label for="dogInput">Add your favorite dog breed!</label>
+      <input type="text" id="dogInput"><br>
 
-<div class= "rating"></div>
+      <!-- Button triggers new movie to be added -->
+      <input id="addDog" type="submit" value="Add your favorite dog breed!">
+    </form>
 
-<form id="dog-form">
-      <label for="dog-input">Add a dog breed</label>
-      <input type="text" id="dog-input"><br>
-
-      <!-- Button triggers new dog breed to be added -->
-      <input id="add-dog" type="submit" value="Add a dog">
-</form>
+<!-- Gifs should appear here -->
+    <div class= "dogGifs"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
@@ -33,7 +33,7 @@
 
 //Deleting the movies prior to adding new movies
 //is this needed?
-//    	$("#showButtons").empty();
+    	$("#showButtons").empty();
 
 	//create a way to add topics to the array, use a loop to append each string in the array		
 		for (var i = 0; i < topics.length; i++) {
@@ -44,7 +44,7 @@
 		//add class of dogBreed for each button
 		a.addClass("dogBreed");
 		//adding a data attribute, still unsure about this? my understanding is that it helps with the "this" function stuff
-		a.attr("data-attribute")
+		a.attr("dog-name")
     	//adding text to the buttons
     	a.text(topics[i]);
     	//adding buttons to the div
@@ -53,6 +53,20 @@
     
     }
 	
+//create buttons for the dog breeds that are added to the dogbreed field in the form
+	$("#addDog").on("click", function(event) {
+		//user can hit enter, not just click the actual button
+		event.preventDefault();
+	//when a dog is added to the input field it will ignore white space
+	var dogs = $("#dogInput").val().trim();
+
+//push the input entered into the topics array
+	topics.push(dogs);
+
+//entered buttons should show up on the screen
+	renderButtons();
+
+	});
 //should show the buttons
 	renderButtons();
 
@@ -60,8 +74,22 @@
 
 
 
-	
 
+
+
+	//this function handles events when a button is clicked
+/*	function showDogGifs() {
+		var dogs = $(this).attr("dog-name");
+		var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + dogs + "&api_key=dc6zaTOxFJmzC&limit=10&rating=pg"
+
+		$.ajax({
+			url: queryURL,
+			method: "GET"
+		}).done(function(response){
+			$()
+		})
+
+	}*/
 			
       // This function handles events where one button is clicked
 /*      function displayMovieInfo() {
@@ -93,16 +121,9 @@
 
 
 	//
-/*	Your app should take the topics in this array and create buttons in your HTML.
-Try using a loop that appends a button for each string in the array.
-When the user clicks on a button, the page should grab 10 static, non-animated gif images from the GIPHY API and place them on the page.
-When the user clicks one of the still GIPHY images, the gif should animate. If the user clicks the gif again, it should stop playing.
-Under every gif, display its rating (PG, G, so on).
-This data is provided by the GIPHY API.
-Only once you get images displaying with button presses should you move on to the next step.
-Add a form to your page takes the value from a user input box and adds it into your topics array. Then make a function call that takes each topic in the array remakes the buttons on the page.
-Deploy your assignment to Github Pages.*/
+
 
 </script>
+</div>
 </body>
 </html>
