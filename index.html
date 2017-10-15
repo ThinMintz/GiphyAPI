@@ -18,29 +18,65 @@
       <label for="dog-input">Add a dog breed</label>
       <input type="text" id="dog-input"><br>
 
-      <!-- Button triggers new movie to be added -->
+      <!-- Button triggers new dog breed to be added -->
       <input id="add-dog" type="submit" value="Add a dog">
-    </form>
+</form>
 
-<script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
 	//create an array named topics
-	var topics= ["chihuahua", "pug", "boxer",]
+	var topics = ["chihuahua", "pug", "boxer",]
 	
-	//create a way to add topics to the array, use a loop to append each string in the array
+	
+    // Function for displaying dog gifs
+    function renderButtons() {
+
+//Deleting the movies prior to adding new movies
+//is this needed?
+//    	$("#showButtons").empty();
+
+	//create a way to add topics to the array, use a loop to append each string in the array		
+		for (var i = 0; i < topics.length; i++) {
+		console.log(topics[i]);
+
+		//Make buttons for each array item, 
+		var a = $("<button>");
+		//add class of dogBreed for each button
+		a.addClass("dogBreed");
+		//adding a data attribute, still unsure about this? my understanding is that it helps with the "this" function stuff
+		a.attr("data-attribute")
+    	//adding text to the buttons
+    	a.text(topics[i]);
+    	//adding buttons to the div
+    	$("#showButtons").append(a);
+    }
+    
+    }
+	
+//should show the buttons
+	renderButtons();
+
+
+
+
+
+	
+
+			
       // This function handles events where one button is clicked
-      $("#showbuttons").on("click", function(event) {
-        // Preventing the buttons default behavior when clicked (which is submitting a form)
-        event.preventDefault();
-        // This line grabs the input from the textbox
-        var dogs = $("#dog-input").val().trim();
+/*      function displayMovieInfo() {
 
-        // Adding the movie from the textbox to our array
-        topics.push(dog);
+        var movie = $(this).attr("data-name");
+        var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=40e9cece";
 
-        // Calling renderButtons which handles the processing of our movie array
-        renderButtons();
-
-      });
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).done(function(response) {
+          $("#movies-view").text(JSON.stringify(response));
+          renderButtons();
+        });
+      }*/
 
 	//create buttons with the name of the topics you have chosen
 
