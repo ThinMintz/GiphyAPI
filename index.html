@@ -27,12 +27,11 @@
 	//create an array named topics
 	var topics = ["chihuahua", "pug", "boxer",]
 	
-	
     // Function for displaying dog gifs
     function renderButtons() {
 
 //Deleting the movies prior to adding new movies
-//is this needed?
+//is this needed? Answer, YES! otherwise it will keep adding all the elements of the array not just one the one you added
     	$("#showButtons").empty();
 
 	//create a way to add topics to the array, use a loop to append each string in the array		
@@ -44,7 +43,7 @@
 		//add class of dogBreed for each button
 		a.addClass("dogBreed");
 		//adding a data attribute, still unsure about this? my understanding is that it helps with the "this" function stuff
-		a.attr("dog-name")
+		a.attr("dog-name" /*, topics[i]*/);
     	//adding text to the buttons
     	a.text(topics[i]);
     	//adding buttons to the div
@@ -52,7 +51,37 @@
     }
     
     }
-	
+	//this creates a function handles which will search for 10 gifs when button is click
+	function showDogGifs() {
+		var dogsGif = $(this).attr("dog-name");
+
+		$.get("https://api.giphy.com/v1/gifs/search", {q: dogsGif, api_key: "dc6zaTOxFJmzC", limit: 10})
+		//will run when the data is done being retrieved
+		.done(function(response){
+			//storing an array of results in the results variable
+			var results = response.data;
+			console.log(results);
+			//looping over every result item (NOT SURE IF THIS IS NEEDED)
+			for (var i = 0; i < results.length; i++) {
+				var gifDiv = $("<div class='item'>");
+
+				var rating = results[i].rating;
+
+				var p = $("<p>").text("Rating: " + rating);
+
+				var dogImage = $("<img>");
+				dogImage.attr("src", results[i].images.fixed_height.url);
+
+				gifDiv.prepend(p);
+				gifDiv.prepend(dogImage);
+
+				$("#dogGifs").prepend(gifDiv);
+
+				
+			}
+		});
+
+	};	
 //create buttons for the dog breeds that are added to the dogbreed field in the form
 	$("#addDog").on("click", function(event) {
 		//user can hit enter, not just click the actual button
@@ -60,51 +89,45 @@
 	//when a dog is added to the input field it will ignore white space
 	var dogs = $("#dogInput").val().trim();
 
+
 //push the input entered into the topics array
 	topics.push(dogs);
 
 //entered buttons should show up on the screen
 	renderButtons();
-
 	});
-//should show the buttons
+
+// Adding a click event listener to all elements with a class of "movie"
+      $(document).on("click", ".dogBreed", showDogGifs);
+//should show the initial buttons
 	renderButtons();
 
 
-
-
-
-
-
-
-	//this function handles events when a button is clicked
-/*	function showDogGifs() {
-		var dogs = $(this).attr("dog-name");
-		var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + dogs + "&api_key=dc6zaTOxFJmzC&limit=10&rating=pg"
-
-		$.ajax({
-			url: queryURL,
-			method: "GET"
-		}).done(function(response){
-			$()
-		})
-
-	}*/
 			
-      // This function handles events where one button is clicked
-/*      function displayMovieInfo() {
+ //This function handles events where one button is clicked
+/* $.get("https://api.giphy.com/v1/gifs/search", {q: person, api_key: "dc6zaTOxFJmzC", limit: 10})
+      //will run after data comes back
+        .done(function(response) {
+          //storing an array of results in the results variable
+          var results = response.data;
+          //looping over ever result item
+          for (var i = 0; i < results.length; i++) {
+            var gifDiv = $("<div class='item'>");
 
-        var movie = $(this).attr("data-name");
-        var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=40e9cece";
+            var rating = results[i].rating;
 
-        $.ajax({
-          url: queryURL,
-          method: "GET"
-        }).done(function(response) {
-          $("#movies-view").text(JSON.stringify(response));
-          renderButtons();
+            var p = $("<p>").text("Rating: " + rating);
+
+            var personImage = $("<img>");
+            personImage.attr("src", results[i].images.fixed_height.url);
+
+            gifDiv.prepend(p);
+            gifDiv.prepend(personImage);
+
+            $("#gifs-appear-here").prepend(gifDiv);
+          }
         });
-      }*/
+    });*/
 
 	//create buttons with the name of the topics you have chosen
 
