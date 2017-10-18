@@ -26,8 +26,9 @@
     <script type="text/javascript">
 	//create an array named topics
 	var topics = ["chihuahua", "pug", "boxer",]
-	
-    // Function for displaying dog gifs
+
+
+    // Function for displaying dog buttons
     function renderButtons() {
 
 //Deleting the movies prior to adding new movies
@@ -43,7 +44,7 @@
 		//add class of dogBreed for each button
 		a.addClass("dogBreed");
 		//adding a data attribute, still unsure about this? my understanding is that it helps with the "this" function stuff
-		a.attr("dog-name");
+		a.attr("dog-name", topics[i]);
     	//adding text to the buttons, the bracketed i keeps the whole array from appearing in the buttons
     	a.text(topics[i]);
     	//adding buttons to the div
@@ -64,8 +65,8 @@
 		.done(function(response){
 			//storing an array of results in the results variable
 			var results = response.data;
-			console.log(results);
-			//looping over every result item (NOT SURE IF THIS IS NEEDED)
+		/*	console.log(results);
+*/			//looping over every result item (NOT SURE IF THIS IS NEEDED)
 			for (var i = 0; i < results.length; i++) {
 				var gifDiv = $("<div class='dogBreed'>");
 
@@ -79,7 +80,7 @@
 				gifDiv.prepend(p);
 				gifDiv.prepend(dogImage);
 
-				$("#dogGifs").prepend(gifDiv);
+				$(".dogGifs").prepend(gifDiv);
 
 				
 			}
@@ -91,11 +92,11 @@
 		//user can hit enter, not just click the actual button
 		event.preventDefault();
 	//when a dog is added to the input field it will ignore white space
-	var dogs = $("#dogInput").val().trim();
+	var dogs1 = $("#dogInput").val().trim();
 
 
 //push the input entered into the topics array
-	topics.push(dogs);
+	topics.push(dogs1);
 
 //entered buttons should show up on the screen
 	renderButtons();
