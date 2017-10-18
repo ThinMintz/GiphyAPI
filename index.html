@@ -8,6 +8,9 @@
 <div class = "container">
  <h1>Dog Gifs</h1>
 
+
+ 		<!-- <button id="test_button">Test</button> -->
+
     <!-- Buttons will be added here -->
     <div id="showButtons"></div>
 
@@ -25,6 +28,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
 	//create an array named topics
+
+	// $("#test_button").on("click", function(e){
+	// 	e.preventDefault();
+	// 	console.log($("#dogBreed").find("img:first"));
+	// })
 	var topics = ["chihuahua", "pug", "boxer",]
 
 
@@ -49,6 +57,8 @@
     	a.text(topics[i]);
     	//adding buttons to the div
     	$("#showButtons").append(a);
+    	
+
     	console.log(a);
     }
 
@@ -65,6 +75,7 @@
 		.done(function(response){
 			//storing an array of results in the results variable
 			var results = response.data;
+			console.log(results);
 		/*	console.log(results);
 */			//looping over every result item (NOT SURE IF THIS IS NEEDED)
 			for (var i = 0; i < results.length; i++) {
@@ -75,14 +86,19 @@
 				var p = $("<p>").text("Rating: " + rating);
 
 				var dogImage = $("<img>");
-				dogImage.attr("src", results[i].images.fixed_height.url);
+/*				//moving dog image
+				dogImage.attr("src", results[i].images.fixed_height.url);*/	
+//still dog image
+				dogImage.attr("src", results[i].images["480w_still"].url);
 
+				dogImage.attr("still", results[i].images["480w_still"].url);
+				dogImage.attr("motion", results[i].images.fixed_height.url);
+				dogImage.attr(status);
 				gifDiv.prepend(p);
 				gifDiv.prepend(dogImage);
 
 				$(".dogGifs").prepend(gifDiv);
 
-				
 			}
 		});
 
