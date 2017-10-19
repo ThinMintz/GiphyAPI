@@ -107,9 +107,9 @@
 	};	
 
 
-	
+
 //THIS IS WHERE I THINK i AM HAVING THE ISSUE!
-	$("document").on("click", ".dogBreed" function(){
+	$("document.body").on("click", ".dogBreed", function(){
       // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
       var state = $(this).attr("status");
       // If the clicked image's state is still, update its src attribute to what its data-animate value is.
