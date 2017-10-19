@@ -89,20 +89,42 @@
 /*				//moving dog image
 				dogImage.attr("src", results[i].images.fixed_height.url);*/	
 //still dog image
+				
 				dogImage.attr("src", results[i].images["480w_still"].url);
 
 				dogImage.attr("still", results[i].images["480w_still"].url);
 				dogImage.attr("motion", results[i].images.fixed_height.url);
-				dogImage.attr(status);
+				dogImage.attr("status", "still");
+				dogImage.addClass("dogBreed");
+
 				gifDiv.prepend(p);
 				gifDiv.prepend(dogImage);
 
 				$(".dogGifs").prepend(gifDiv);
-
 			}
 		});
 
 	};	
+
+
+	
+//THIS IS WHERE I THINK i AM HAVING THE ISSUE!
+	$("document").on("click", ".dogBreed" function(){
+      // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+      var state = $(this).attr("status");
+      // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+      // Then, set the image's status to animate
+      // Else set src to the data-still value
+      if (state === "still") {
+        $(this).attr("src", $(this).data("motion"));
+        $(this).attr("status", "motion");
+      } else {
+        $(this).attr("src", $(this).data("still"));
+        $(this).attr("status","still");
+      }
+   
+    });
+
 //create buttons for the dog breeds that are added to the dogbreed field in the form
 	$("#addDog").on("click", function(event) {
 		//user can hit enter, not just click the actual button
