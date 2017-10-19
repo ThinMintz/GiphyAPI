@@ -79,7 +79,7 @@
 		/*	console.log(results);
 */			//looping over every result item (NOT SURE IF THIS IS NEEDED)
 			for (var i = 0; i < results.length; i++) {
-				var gifDiv = $("<div class='dogBreed'>");
+				var gifDiv = $("<div class='dogBressed'>");
 
 				var rating = results[i].rating;
 
@@ -109,17 +109,19 @@
 
 
 //THIS IS WHERE I THINK i AM HAVING THE ISSUE!
-	$("document.body").on("click", ".dogBreed", function(){
+	$(document.body).on("click", ".dogBreed", function(){
       // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-      var state = $(this).attr("status");
+	  var state = $(this).attr("status");
+	  console.log("STATE IS: " + state);
       // If the clicked image's state is still, update its src attribute to what its data-animate value is.
       // Then, set the image's status to animate
       // Else set src to the data-still value
       if (state === "still") {
-        $(this).attr("src", $(this).data("motion"));
+        $(this).attr("src", $(this).attr("motion"));
         $(this).attr("status", "motion");
       } else {
-        $(this).attr("src", $(this).data("still"));
+		console.log("I'M HERE sad face");
+        $(this).attr("src", $(this).attr("still"));
         $(this).attr("status","still");
       }
    
