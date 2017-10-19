@@ -1,157 +1,172 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-	<title></title>
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/css">
+    <title>Let's Look for doggos!</title>
 </head>
+
 <body>
-<div class = "container">
- <h1>Dog Gifs</h1>
+    <div class="container">
+        <h1>Dog Gifs</h1>
+        <div class="row">
+            <div class="col-md-12">
+            <!-- Buttons will be added here -->
+            	<div id="showButtons"></div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <form id="dog-form">
+                    <label for="dogInput">Add your favorite dog breed!</label>
+
+                    <input type="text" id="dogInput" placeholder="Add your doggos here!">
+                    <br>
+                    <!-- Button triggers new movie to be added -->
+                    <input id="addDog" type="submit" value="Add your favorite dog breed!" class= "btn btn-warning">
+            
+        </div>
+        </div>
+        <br>
+        </form>
+        <!-- Gifs should appear here -->
+        <div class="dogGifs"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+        //create an array named topics
+
+        // $("#test_button").on("click", function(e){
+        // 	e.preventDefault();
+        // 	console.log($("#dogBreed").find("img:first"));
+        // })
+        var topics = ["chihuahua", "pug", "boxer", ]
 
 
- 		<!-- <button id="test_button">Test</button> -->
+        // Function for displaying dog buttons
+        function renderButtons() {
 
-    <!-- Buttons will be added here -->
-    <div id="showButtons"></div>
+            //Deleting the movies prior to adding new movies
+            //is this needed? Answer, YES! otherwise it will keep adding all the elements of the array not just one the one you added
+            $("#showButtons").empty();
 
-    <form id="dog-form">
-      <label for="dogInput">Add your favorite dog breed!</label>
-      <input type="text" id="dogInput"><br>
+            //create a way to add topics to the array, use a loop to append each string in the array		
+            for (var i = 0; i < topics.length; i++) {
+                console.log(topics[i]);
 
-      <!-- Button triggers new movie to be added -->
-      <input id="addDog" type="submit" value="Add your favorite dog breed!">
-    </form>
-
-<!-- Gifs should appear here -->
-    <div class= "dogGifs"></div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
-	//create an array named topics
-
-	// $("#test_button").on("click", function(e){
-	// 	e.preventDefault();
-	// 	console.log($("#dogBreed").find("img:first"));
-	// })
-	var topics = ["chihuahua", "pug", "boxer",]
+                //Make buttons for each array item, 
+                var a = $("<button>");
+                //add class of dogBreed for each button
+                a.addClass("dogBreed");
+                a.addClass("btn btn-info")
+                //adding a data attribute, still unsure about this? my understanding is that it helps with the "this" function stuff
+                a.attr("dog-name", topics[i]);
+                //adding text to the buttons, the bracketed i keeps the whole array from appearing in the buttons
+                a.text(topics[i]);
+                //adding buttons to the div
+                $("#showButtons").append(a);
 
 
-    // Function for displaying dog buttons
-    function renderButtons() {
+                console.log(a);
+            }
 
-//Deleting the movies prior to adding new movies
-//is this needed? Answer, YES! otherwise it will keep adding all the elements of the array not just one the one you added
-    $("#showButtons").empty();
-
-	//create a way to add topics to the array, use a loop to append each string in the array		
-		for (var i = 0; i < topics.length; i++) {
-		console.log(topics[i]);
-
-		//Make buttons for each array item, 
-		var a = $("<button>");
-		//add class of dogBreed for each button
-		a.addClass("dogBreed");
-		//adding a data attribute, still unsure about this? my understanding is that it helps with the "this" function stuff
-		a.attr("dog-name", topics[i]);
-    	//adding text to the buttons, the bracketed i keeps the whole array from appearing in the buttons
-    	a.text(topics[i]);
-    	//adding buttons to the div
-    	$("#showButtons").append(a);
-    	
-
-    	console.log(a);
-    }
-
-    }
-//trying to add dog breed to attribute "dog-name"
+        }
+        //trying to add dog breed to attribute "dog-name"
 
 
-	//this creates a function handles which will search for 10 gifs when button is click
-	function showDogGifs() {
-		var dogsGif = $(this).attr("dog-name");
+        //this creates a function handles which will search for 10 gifs when button is click
+        function showDogGifs() {
+            var dogsGif = $(this).attr("dog-name");
 
-		$.get("https://api.giphy.com/v1/gifs/search", {q: dogsGif, api_key: "dc6zaTOxFJmzC", limit: 10})
-		//will run when the data is done being retrieved
-		.done(function(response){
-			//storing an array of results in the results variable
-			var results = response.data;
-			console.log(results);
-		/*	console.log(results);
-*/			//looping over every result item (NOT SURE IF THIS IS NEEDED)
-			for (var i = 0; i < results.length; i++) {
-				var gifDiv = $("<div class='dogBressed'>");
+            $.get("https://api.giphy.com/v1/gifs/search", { q: dogsGif, api_key: "dc6zaTOxFJmzC", limit: 10 })
+                //will run when the data is done being retrieved
+                .done(function(response) {
+                    //storing an array of results in the results variable
+                    var results = response.data;
+                    console.log(results);
+                    /*	console.log(results);
+                     */ //looping over every result item (NOT SURE IF THIS IS NEEDED)
+                    for (var i = 0; i < results.length; i++) {
+                        var gifDiv = $("<div class='dogBreed'>");
 
-				var rating = results[i].rating;
+                        var rating = results[i].rating;
 
-				var p = $("<p>").text("Rating: " + rating);
+                        var p = $("<p>").text("Rating: " + rating);
 
-				var dogImage = $("<img>");
-/*				//moving dog image
-				dogImage.attr("src", results[i].images.fixed_height.url);*/	
-//still dog image
-				
-				dogImage.attr("src", results[i].images["480w_still"].url);
+                        var dogImage = $("<img>");
+                        /*				//moving dog image
+                        				dogImage.attr("src", results[i].images.fixed_height.url);*/
+                        //still dog image
 
-				dogImage.attr("still", results[i].images["480w_still"].url);
-				dogImage.attr("motion", results[i].images.fixed_height.url);
-				dogImage.attr("status", "still");
-				dogImage.addClass("dogBreed");
+                        dogImage.attr("src", results[i].images["480w_still"].url);
 
-				gifDiv.prepend(p);
-				gifDiv.prepend(dogImage);
-
-				$(".dogGifs").prepend(gifDiv);
-			}
-		});
-
-	};	
+                        dogImage.attr("still", results[i].images["480w_still"].url);
+                        dogImage.attr("motion", results[i].images.fixed_height.url);
+                        dogImage.attr("status", "still");
+                        dogImage.addClass("dogBreed");
+                        //THIS IS A TEST!
+                        dogImage.addClass("img-circle");
 
 
+                        gifDiv.prepend(p);
+                        gifDiv.prepend(dogImage);
 
-//THIS IS WHERE I THINK i AM HAVING THE ISSUE!
-	$(document.body).on("click", ".dogBreed", function(){
-      // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-	  var state = $(this).attr("status");
-	  console.log("STATE IS: " + state);
-      // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-      // Then, set the image's status to animate
-      // Else set src to the data-still value
-      if (state === "still") {
-        $(this).attr("src", $(this).attr("motion"));
-        $(this).attr("status", "motion");
-      } else {
-		console.log("I'M HERE sad face");
-        $(this).attr("src", $(this).attr("still"));
-        $(this).attr("status","still");
-      }
-   
-    });
+                        $(".dogGifs").prepend(gifDiv);
+                    }
+                });
 
-//create buttons for the dog breeds that are added to the dogbreed field in the form
-	$("#addDog").on("click", function(event) {
-		//user can hit enter, not just click the actual button
-		event.preventDefault();
-	//when a dog is added to the input field it will ignore white space
-	var dogs1 = $("#dogInput").val().trim();
-
-
-//push the input entered into the topics array
-	topics.push(dogs1);
-
-//entered buttons should show up on the screen
-	renderButtons();
-	});
-
-// Adding a click event listener to all elements with a class of "movie" NOT WORKING
-      $(document).on("click", ".dogBreed", showDogGifs);
-//should show the initial buttons
-	renderButtons();
+        };
 
 
 
+        //THIS IS WHERE I THINK i AM HAVING THE ISSUE!
+        $(document.body).on("click", ".dogBreed", function() {
+            // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+            var state = $(this).attr("status");
+            console.log("STATE IS: " + state);
+            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+            // Then, set the image's status to animate
+            // Else set src to the data-still value
+            if (state === "still") {
+                $(this).attr("src", $(this).attr("motion"));
+                $(this).attr("status", "motion");
+            } else {
+                console.log("I'M HERE sad face");
+                $(this).attr("src", $(this).attr("still"));
+                $(this).attr("status", "still");
+            }
+
+        });
+
+        //create buttons for the dog breeds that are added to the dogbreed field in the form
+        $("#addDog").on("click", function(event) {
+            //user can hit enter, not just click the actual button
+            event.preventDefault();
+            //when a dog is added to the input field it will ignore white space
+            var dogs1 = $("#dogInput").val().trim();
 
 
-</script>
-</div>
+            //push the input entered into the topics array
+            topics.push(dogs1);
+
+            //entered buttons should show up on the screen
+            renderButtons();
+        });
+
+        // Adding a click event listener to all elements with a class of "movie" NOT WORKING
+        $(document).on("click", ".dogBreed", showDogGifs);
+        //should show the initial buttons
+        renderButtons();
+        </script>
+    </div>
 </body>
+
 </html>

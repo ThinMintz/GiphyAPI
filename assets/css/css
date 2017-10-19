@@ -1,0 +1,8 @@
+body {
+	background: url(https://i.pinimg.com/736x/8f/99/8a/8f998ada3f97f9e30676955b7daf0806--art-clipart-clipart-images.jpg);
+}
+
+h1 {
+	
+	font-family: 'Gloria Hallelujah', cursive;	
+}
